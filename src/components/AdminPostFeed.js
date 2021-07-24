@@ -1,22 +1,34 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Card, Row, Col, Button, Form } from "react-bootstrap";
-import { AiFillDelete } from "react-icons/ai";
-
-const Posts = (props) => {
+import { AiOutlineHeart, AiFillDelete } from "react-icons/ai";
+import { FcLike } from "react-icons/fc";
+const AdminPostFeed = (props) => {
+  const [likes, setLikes] = useState(props.likes);
+  const [liked, setLiked] = useState(props.liked);
   const [isComment, setIsComment] = useState(false);
   const [comment, setComment] = useState("");
 
+  
   return (
     <div>
-      <Card className="mt-3">
+    
+      <Card className="mt-3"  style={{
+        
+        border: "solid red 1px"
+        
+      }} >
+       
         <Card.Body>
-          <Row>
+      
+          <Row> 
             <Col md={2}>
+            
               <div className="text-center">
                 <div
                   style={{
                     backgroundImage: `url(${props.imgurl})`,
+                    border: "solid red"
+                    
                   }}
                   className="dp"
                 ></div>
@@ -25,14 +37,9 @@ const Posts = (props) => {
             </Col>
             <Col md={10}>
               <p>{props.content}</p>
-              <div className="d-flex align-items-center mt-5 mb-4">
-                <div className="d-flex align-items-center"></div>
-                <Button
-                  className="ml-3"
-                  onClick={() => setIsComment(!isComment)}
-                >
-                  Add Comment
-                </Button>
+              <div className="d-flex justify-content-end align-items-center mt-5 mb-4">
+                
+               
                 <Button
                   variant="danger"
                   className="ml-3"
@@ -41,10 +48,12 @@ const Posts = (props) => {
                   Delete Post
                 </Button>
               </div>
+
+
               <div>
                 <ul style={{ listStyle: "none" }}>
                   {props.comments &&
-                    props.comments.map((value, index) => {
+                    props.comments.map((value, index,) => {
                       return (
                         <li key={index} className="mb-2">
                           <Card style={{ padding: 0 }}>
@@ -63,6 +72,7 @@ const Posts = (props) => {
                                   }
                                 />
                               </div>
+
                             </Card.Body>
                           </Card>
                         </li>
@@ -104,4 +114,4 @@ const Posts = (props) => {
   );
 };
 
-export default Posts;
+export default AdminPostFeed;

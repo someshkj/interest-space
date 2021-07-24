@@ -9,7 +9,7 @@ const PostFeed = ({ refreshId, refresh }) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4500/posts/allposts/")
+      .get("https://interest-space.herokuapp.com/posts/allposts/")
       .then((res) => {
         console.log(res.data);
         setData(res.data);
@@ -21,7 +21,7 @@ const PostFeed = ({ refreshId, refresh }) => {
 
   const deletePost = (id) => {
     axios
-      .delete(`http://localhost:4500/posts/${id}/`)
+      .delete(`https://interest-space.herokuapp.com/posts/${id}/`)
       .then((res) => {
         console.log(res);
         refresh();
@@ -40,7 +40,10 @@ const PostFeed = ({ refreshId, refresh }) => {
     console.log(newComment);
     console.log(id);
     axios
-      .post(`http://localhost:4500/posts/comment/${id}`, newComment)
+      .post(
+        `https://interest-space.herokuapp.com/posts/comment/${id}`,
+        newComment
+      )
       .then((res) => {
         console.log(res);
         refresh();
@@ -52,7 +55,9 @@ const PostFeed = ({ refreshId, refresh }) => {
 
   const deleteSpecificComment = (commentId, postId) => {
     axios
-      .delete(`http://localhost:4500/posts/comment/${postId}/${commentId}`)
+      .delete(
+        `https://interest-space.herokuapp.com/posts/comment/${postId}/${commentId}`
+      )
       .then((res) => {
         console.log(res);
         refresh();
@@ -111,15 +116,15 @@ const PostFeed = ({ refreshId, refresh }) => {
           .slice(0)
           .reverse()
           .map((value, index) => {
+            console.log(value);
             return (
               <Posts
                 id={value._id}
                 key={index}
-                imgurl="https://cdn2.momjunction.com/wp-content/uploads/2019/07/Whatsapp-DP9.jpg"
+                imgurl="https://icon-library.com/images/free-avatar-icon/free-avatar-icon-13.jpg"
                 name={value.name}
                 content={value.text}
                 comments={value.comments}
-                // likes={value.likes}
                 deletePost={deletePost}
                 commentOnPost={commentOnPost}
                 deleteSpecificComment={deleteSpecificComment}

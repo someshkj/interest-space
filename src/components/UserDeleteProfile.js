@@ -1,15 +1,76 @@
-import React from 'react'
-import Navbar from './Navbar';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Navbar from "./Navbar";
 
-function UserDeleteProfile() {
+function UserDeleteProfile(props) {
+  const [uemail, setUEmail] = useState("");
+  const [msg, setMessage] = useState("");
+
+  const onChangeUEmail = (e) => {
+    setUEmail(e.target.value);
+    setMessage(""); //REMOVE ERROE MSG
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    console.log(`Form submitted:`);
+    console.log(`EMAIL ID: ${uemail}`);
+
+    axios
+      .delete("https://interest-space.herokuapp.com/u/remove/" + uemail)
+      .then((res) => {
+        console.log(res.data);
+        setMessage("SUCCESSFULLY DELETED");
+        props.history.push("/Logout");
+      })
+      .catch((err) => {
+        console.log(err);
+        setMessage("INVALID EMAIL ID");
+      });
+
+    setUEmail("");
+  };
+  useEffect(() => {
+    let empemailid = sessionStorage.getItem("useremail");
+    console.log(empemailid);
+    if (empemailid == null) empemailid = props.email;
+    axios
+      .get("https://interest-space.herokuapp.com/u/search/" + empemailid)
+      .then((response) => {
+        setUEmail(response.data.uemail);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
   return (
-    <div>
+    <>
       <Navbar />
-      <br />
-      <h1>THIS IS Update PAGE</h1>
-    
-    </div>
-  )
+      <div className="container">
+        <br />
+        <h1>Account Deletion</h1>
+        <br />
+        <h3>Are you sure you want to delete your profile with the email : </h3>
+        <br />
+        <b style={{ color: "red" }}>{msg}</b>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            value={uemail}
+            onChange={(e) => onChangeUEmail(e)}
+            placeholder="EMAIL ID"
+          />
+          <br />
+          <br />
+          <input
+            type="submit"
+            value="DELETE ACCOUNT"
+            className="btn btn-danger"
+          />
+        </form>
+      </div>
+    </>
+  );
 }
 
-export default UserDeleteProfile
+export default UserDeleteProfile;

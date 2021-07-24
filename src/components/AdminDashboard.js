@@ -1,6 +1,8 @@
 import React from 'react'
 import { Redirect } from "react-router-dom";
 import Navbar from './Navbar';
+import {ReactComponent as Illustration} from "./img/admin.svg"
+import './style.css';
 
 function AdminDashboard() {
   let authuser = sessionStorage.getItem('Key_Variable')
@@ -13,7 +15,10 @@ function AdminDashboard() {
       <div>
         <Navbar/>
         <br />
-        <h3>WELCOME ADMIN</h3>
+        <h3 className="text-center">WELCOME ADMIN</h3>
+        <br /><br />
+        <Illustration className="Illustration " />
+       
       </div>
     )
   }

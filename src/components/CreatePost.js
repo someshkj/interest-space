@@ -19,7 +19,7 @@ const CreatePost = (props) => {
     console.log(details);
 
     axios
-      .post("http://localhost:4500/posts/create/", details)
+      .post("https://interest-space.herokuapp.com/posts/create/", details)
       .then((res) => {
         console.log(res);
         setPostContent("");
